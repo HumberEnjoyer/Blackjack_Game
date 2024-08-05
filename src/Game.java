@@ -1,11 +1,13 @@
+
 import java.util.List;
 import java.util.Scanner;
 
 public class Game {
-    private Deck deck; 
-    private Player player; 
-    private Dealer dealer; 
-    private Art art; 
+
+    private Deck deck;
+    private Player player;
+    private Dealer dealer;
+    private Art art;
 
     // Constructor to initialize the game components
     public Game() {
@@ -19,6 +21,13 @@ public class Game {
     public void play() {
         Scanner scn = new Scanner(System.in);
         art.welcomeMessage();  // Display welcome message
+
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            System.out.println("Sleep was interrupted");
+        }
 
         // Deal initial cards to player and dealer
         player.addCard(deck.drawCard());
@@ -57,10 +66,11 @@ public class Game {
 
             if (dealer.isBust()) {
                 System.out.println("The dealer has busted!");
+                System.out.println("You win!");
+            } else {
+                displayCards(dealer.getHand(), "dealer");
+                determineWinner();
             }
-
-            displayCards(dealer.getHand(), "dealer");
-            determineWinner();
         } else {
             System.out.println("Dealer wins!");
         }
